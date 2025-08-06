@@ -7,8 +7,10 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
+import { allRoutes } from '@/constants/Routes';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
@@ -19,7 +21,9 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const backgroundColor = useThemeColor({}, 'background');
+
+  const backgroundColor = useThemeColor({
+  }, 'background');
 
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -36,20 +40,37 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack
-        screenOptions={{
-          headerShadowVisible: false,
-          contentStyle: {
-            backgroundColor: 'pink',
-          },
-          headerStyle: {
-            backgroundColor: 'pink',
-          },
-        }}
-      >
-        <Stack.Screen name="index" options={{ title: 'Inicio' }} />s
-      </Stack>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ backgroundColor: backgroundColor, flex: 1 }}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack
+          screenOptions={{
+            headerShadowVisible: false,
+            
+            contentStyle: {
+              backgroundColor: 'bg-light-background dark:bg-dark-background',
+
+            },
+            headerStyle: {
+              backgroundColor: 'bg-light-background dark:bg-dark-background',
+            },
+          }}
+        >
+          <Stack.Screen name="index" options={{
+            title: 'Inicio'
+          }} />
+
+          {
+            allRoutes.map((route) => (
+              <Stack.Screen
+                key={route.name}
+                name={route.name}
+                options={{
+                  title: "" //route.title,
+                }} />
+            ))
+          }
+        </Stack>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
