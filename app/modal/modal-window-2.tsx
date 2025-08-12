@@ -10,25 +10,16 @@ const ModalWindow = () => {
     return (
         <ThemedView
             className='justify-center items-center flex-1'
-            bgColor='#A52182'
         >
-            <Text>ModalWindow</Text>
+            <Text>Another ModalWindow</Text>
 
-
-
-            <ThemedButton
-                onPress={() => router.push('/modal/modal-window-2')}
-                className='mx-4'
-            >
-                Open another modal
-            </ThemedButton>
 
             <ThemedButton
                 onPress={() => router.dismiss()}
                 className='mx-4'
             >
                 Close
-            </ThemedButton>Ï
+            </ThemedButton>
 
             <StatusBar style={
                 Platform.OS === 'ios' ? 'light' : 'auto'
