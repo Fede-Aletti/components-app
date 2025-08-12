@@ -65,7 +65,8 @@ export default function RootLayout() {
                 key={route.name}
                 name={route.name}
                 options={{
-                  title: "" //route.title,
+                  title: "", //route.title,
+                  headerShown: !route.title.includes('Slides'),
                 }} />
             ))
           }
