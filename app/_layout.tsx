@@ -1,8 +1,3 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -11,16 +6,15 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
 import { allRoutes } from '@/constants/Routes';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
+import { ThemeChangerProvider } from '@/presentation/context/theme-changer-context';
 import './global.css';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
 
   const backgroundColor = useThemeColor({
   }, 'background');
@@ -41,11 +35,11 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ backgroundColor: backgroundColor, flex: 1 }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ThemeChangerProvider>
         <Stack
           screenOptions={{
             headerShadowVisible: false,
-            
+
             contentStyle: {
               backgroundColor: 'bg-light-background dark:bg-dark-background',
 
@@ -71,7 +65,7 @@ export default function RootLayout() {
             ))
           }
         </Stack>
-      </ThemeProvider>
+      </ThemeChangerProvider>
     </GestureHandlerRootView>
   );
 }
